@@ -2,11 +2,13 @@ public class Comentario {
     private String nombre;
     private String fecha;
     private int calificacion;
+    private String comentario;
     
-    public Comentario(String nombre,String fecha,int calificacion) {
+    public Comentario(String nombre,String fecha,int calificacion, String comentario) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.calificacion = calificacion; 
+        this.comentario = comentario;
     }
     
     public void setNombre (String nombre) {
@@ -32,6 +34,13 @@ public class Comentario {
         return calificacion;
     }
 
+    public void setComentario (String comentario) {
+        this.comentario = comentario;
+    }
 
+    public String getComentario() {
+        return comentario;
+    }
 
+    
 }

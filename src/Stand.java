@@ -46,5 +46,8 @@ public class Stand {
     public void setComentario (Comentario comentario) {
         comentarios.add(comentario);
     }
-
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
+    }
+    
 }
