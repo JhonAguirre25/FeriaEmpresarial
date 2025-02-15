@@ -1,8 +1,11 @@
+import javax.print.DocFlavor.STRING;
+
 public class Empresa {
 
     private String nombre;
     private String sector;
     private String email;
+    private String stand;
 
     public Empresa(String nombre, String sector, String email){
         this.nombre = nombre;
@@ -29,6 +32,13 @@ public class Empresa {
     public String getEmail() {
         return email;
     }
+    public void setStand(String stand) {
+        this.stand = stand;
+    }
+    public String getStand() {
+        return stand;
+    }
+    
 
 }
 

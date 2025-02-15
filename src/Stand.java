@@ -1,24 +1,24 @@
 import java.util.ArrayList;
 
 public class Stand {
-    private int id;
+    private String id;
     private String ubicacion;
     private String tamaño;
     private String empresa;
     private ArrayList<Comentario> comentarios = new ArrayList<Comentario>(); 
 
 
-    public Stand (int id, String ubicacion, String tamaño){
+    public Stand (String id, String ubicacion, String tamaño){
         this.id = id;
         this.ubicacion = ubicacion;
         this.tamaño = tamaño;
     } 
 
-    public void setId (int id) {
+    public void setId (String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
     public void setUbicacion (String ubicacion) {
@@ -48,6 +48,14 @@ public class Stand {
     }
     public ArrayList<Comentario> getComentarios() {
         return comentarios;
+    }
+    public int getPromedio (){
+        int calificacionTotal = 0;
+        for (Comentario comentario : comentarios) {
+            calificacionTotal += comentario.getCalificacion(); 
+        } 
+        calificacionTotal = calificacionTotal / comentarios.size();
+            return calificacionTotal;
     }
     
 }
