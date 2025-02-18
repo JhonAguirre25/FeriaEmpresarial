@@ -42,5 +42,15 @@ public class Comentario {
         return comentario;
     }
 
+    public void imprimirComentario(){
+        System.out.println(getNombre() + " " + getFecha() + " ");
+        System.out.println("");
+        System.out.println(getComentario());
+        System.out.println("");
+        System.out.println("Calificacion: " + getCalificacion() + " Estrellas.");
+        System.out.println("-------");
+        
+    }
+
     
 }

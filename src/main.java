@@ -57,8 +57,11 @@ public class main {
                 } else if (option.equals("3")) {
                     visitarStands(scnr);
                 } else if (option.equals("4")) {
+                    verComentario(scnr);
+                }  else if (option.equals("5")) {
                     continue;
                 }
+
 
             } else if (option.equals("3")) {
                 menuEmpresas();
@@ -130,7 +133,9 @@ public class main {
         System.out.println("1. Lista de Stand");
         System.out.println("2. Asignar Stand");
         System.out.println("3. Visitar Stand");
-        System.out.println("4. Regresar al menu principal");
+        System.out.println("4. Ver comentarios");
+        System.out.println("5. Regresar al menu principal");
+        
     }
 
     public static void registroEmpresa(Scanner scnr) {
@@ -312,13 +317,17 @@ public class main {
         listaVisitantes.add(visitante2);
         listaVisitantes.add(visitante3);
 
+
         Stand stand1 = new Stand("123", "pabellon A", "Grande");
         Stand stand2 = new Stand("456", "pabellon B", "Pequeño");
         Stand stand3 = new Stand("789", "pabellon C", "Mediano");
-
+            stand1.setEmpresa("cocacola");
+            stand2.setEmpresa("Sprite");
         listaStands.add(stand3);
         listaStands.add(stand2);
         listaStands.add(stand1);
+
+        
 
     }
 
@@ -353,6 +362,22 @@ public class main {
 
 
             }
+        }
+    }
+
+    public static void verComentario (Scanner scnr) {
+        System.out.println("Que Empresa desearia ver?");
+        String respuesta = scnr.nextLine(); 
+        for (Stand stand : listaStands) {
+            if (respuesta.equals(stand.getEmpresa())) {
+                ArrayList<Comentario> lista = stand.getComentarios();
+                System.out.println("-------");
+                for (Comentario comentario : lista) {
+                    comentario.imprimirComentario();
+                } 
+                break;
+            }
+            
         }
     }
 
