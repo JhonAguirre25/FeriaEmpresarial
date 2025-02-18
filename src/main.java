@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,7 +12,6 @@ public class main {
         añadirDatos();
         Scanner scnr = new Scanner(System.in);
         String option = "";
-
         while (true) {
             menu();
             option = scnr.nextLine();
@@ -55,12 +55,11 @@ public class main {
                         }
                     }
                 } else if (option.equals("3")) {
-                    
+                    visitarStands(scnr);
                 } else if (option.equals("4")) {
-
-                } else if (option.equals("5")) {
                     continue;
                 }
+
             } else if (option.equals("3")) {
                 menuEmpresas();
                 option = scnr.nextLine();
@@ -171,7 +170,8 @@ public class main {
 
     public static void mostrarEmpresas() {
         for (Empresa empresa : listaEmpresas) {
-            System.out.println(empresa.getNombre() + " sector: " + empresa.getSector() + " correo electronico: " + empresa.getEmail());
+            System.out.println(empresa.getNombre() + " sector: " + empresa.getSector() + " correo electronico: "
+                    + empresa.getEmail());
 
         }
     }
@@ -295,7 +295,7 @@ public class main {
         }
     }
 
-    public static void añadirDatos(){
+    public static void añadirDatos() {
         Empresa empresa1 = new Empresa("cocacola", "retail", "cocacola.com");
         Empresa empresa2 = new Empresa("Sprite", "retail", "Sprite.com");
         Empresa empresa3 = new Empresa("Fant", "retail", "Fanta.com");
@@ -322,6 +322,38 @@ public class main {
 
     }
 
+    public static void visitarStands(Scanner scnr) {
+        System.out.println("ingrese el numero del stand");
+        String respuesta = scnr.nextLine();
+        for (int i = 0; i < listaStands.size(); i++) {
+            if (listaStands.get(i).getId().equals(respuesta)) {
+                System.out.println("ingrese su nombre");
+                String nombreVisitante = scnr.nextLine();
+                boolean existe = false;
+                
+                for (Visitante visitante : listaVisitantes) {
+                    if (visitante.getNombre().equals(nombreVisitante)) {
+                        existe = true;        
+                        visitante.setStands(listaStands.get(i).getId());
+                    }
+                }
+                if (!existe) {
+                    System.out.println(nombreVisitante + " no esta en la lista de visitantes.");
+                    break;
+                }
+                
+                System.out.println("Ingrese el comentario que desea dejar");
+                String comentario = scnr.nextLine();
+                System.out.println("Califique su experiencia de 1 a 5");
+                int calificacion = scnr.nextInt();
+                String fecha = LocalDate.now().toString();
+                Comentario comentarioNuevo = new Comentario(nombreVisitante, fecha, calificacion, comentario);
+                 listaStands.get(i).setComentario(comentarioNuevo);
+                 System.out.println("comentario añadido con exito");
 
+
+            }
+        }
+    }
 
 }
