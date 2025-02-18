@@ -9,6 +9,7 @@ public class Comentario {
         this.fecha = fecha;
         this.calificacion = calificacion; 
         this.comentario = comentario;
+        
     }
     
     public void setNombre (String nombre) {

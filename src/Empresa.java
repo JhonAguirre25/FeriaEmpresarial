@@ -11,6 +11,7 @@ public class Empresa {
         this.nombre = nombre;
         this.sector = sector;
         this.email = email;
+        this.stand = "sin asignar";
     }
 
     public void setNombre (String nombre) {

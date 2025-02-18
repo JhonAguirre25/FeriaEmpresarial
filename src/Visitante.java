@@ -45,7 +45,7 @@ public class Visitante {
         for (String nombre : stands) {
              saveStands += " " + nombre;
         }
-        System.out.println(nombre + " : " + saveStands + " ");
+        System.out.println(saveStands);
     }
 
 }

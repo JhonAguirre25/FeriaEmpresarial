@@ -35,25 +35,7 @@ public class main {
                 if (option.equals("1")) {
                     mostrarStands();
                 } else if (option.equals("2")) {
-                    standDisponibles();
-                    empresasDisponibles();
-                    System.out.println("");
-                    System.out.println("Elija un stand ");
-                    String stand = scnr.nextLine();
-                    System.out.println("Elije un empresa");
-                    String empresa = scnr.nextLine();
-                    for (Stand elemento : listaStands) {
-                        if (elemento.getId() == stand) {
-                            elemento.setEmpresa(empresa);
-                            break;
-                        }
-                    }
-                    for (Empresa elemento : listaEmpresas) {
-                        if (elemento.getNombre() == empresa) {
-                            elemento.setStand(stand);
-                            break;
-                        }
-                    }
+                  asignarStand(scnr);
                 } else if (option.equals("3")) {
                     visitarStands(scnr);
                 } else if (option.equals("4")) {
@@ -176,35 +158,49 @@ public class main {
     public static void mostrarEmpresas() {
         for (Empresa empresa : listaEmpresas) {
             System.out.println(empresa.getNombre() + " sector: " + empresa.getSector() + " correo electronico: "
-                    + empresa.getEmail());
+                    + empresa.getEmail() + " stand: " + empresa.getStand());
 
         }
     }
 
     public static void mostrarVisitantes() {
         for (Visitante visitante : listaVisitantes) {
+            System.out.println("   Visitante: ");
             System.out.println(visitante.getNombre() + " Identificacion: " + visitante.getIdenticacion());
+            System.out.println("----Stands visitados----");
+            System.out.println("");
+            visitante.getStands();
+            System.out.println("-");
         }
+        
     }
 
     public static void mostrarCalificaciones() {
         for (Stand stand : listaStands) {
+           if (!stand.getComentarios().isEmpty()) {
             System.out.println("stand: " + stand.getId() + " Ubicacion: " + stand.getUbicacion()
-                    + "Promedio de calificacion: " + stand.getPromedio());
+            + " Promedio de calificacion: " + stand.getPromedio());
+        
+           } else {
+            System.out.println("stand: " + stand.getId() + " Ubicacion: " + stand.getUbicacion()
+            + " Sin calificaciones");
+           }
         }
     }
 
     public static void empresasDisponibles() {
+        System.out.println("----Empresas sin Stand----");
         for (Empresa empresa : listaEmpresas) {
-            if (empresa.getStand() == null) {
+            if (empresa.getStand().equals("sin asignar")) {
                 System.out.println("Empresa " + empresa.getNombre());
             }
         }
     }
 
     public static void standDisponibles() {
+        System.out.println("----Stand sin empresas----");
         for (Stand stand : listaStands) {
-            if (stand.getEmpresa() == null) {
+            if (stand.getEmpresa().equals("sin asignar")) {
                 System.out.println("stand: " + stand.getId() + " " + stand.getUbicacion() + " " + stand.getTamaño());
             }
         }
@@ -212,17 +208,13 @@ public class main {
 
     public static void mostrarStands() {
         System.out.println("<Disponibles>");
-        for (Stand stand : listaStands) {
-            if (stand.getEmpresa() == null) {
-                System.out.println("stand: " + stand.getId() + " " + stand.getUbicacion() + " " + stand.getTamaño());
-            }
-        }
+        standDisponibles();
         System.out.println("<Disponibles>");
 
         System.out.println("<Ocupados>");
         for (Stand stand : listaStands) {
-            if (stand.getEmpresa() != null) {
-                System.out.println("stand: " + stand.getId() + " " + stand.getUbicacion() + " " + stand.getTamaño());
+            if (!stand.getEmpresa().equals("sin asignar")) {
+                System.out.println("stand: " + stand.getId() + " " + stand.getUbicacion() + " " + stand.getTamaño() + " " + stand.getEmpresa());
             }
         }
         System.out.println("<Ocupados>");
@@ -304,6 +296,9 @@ public class main {
         Empresa empresa1 = new Empresa("cocacola", "retail", "cocacola.com");
         Empresa empresa2 = new Empresa("Sprite", "retail", "Sprite.com");
         Empresa empresa3 = new Empresa("Fant", "retail", "Fanta.com");
+        empresa1.setStand("123");
+        empresa2.setStand("456");
+
 
         listaEmpresas.add(empresa3);
         listaEmpresas.add(empresa2);
@@ -312,7 +307,10 @@ public class main {
         Visitante visitante1 = new Visitante("Jean", 123123, "cocacolavis.com");
         Visitante visitante2 = new Visitante("Paola", 21332, "Spritevis.com");
         Visitante visitante3 = new Visitante("Jhon", 5353, "Fantavis.com");
-
+        visitante2.setStands("Sprite");
+        visitante1.setStands("cocacola");
+        visitante1.setStands("Sprite");
+        visitante1.setStands("Fanta");
         listaVisitantes.add(visitante1);
         listaVisitantes.add(visitante2);
         listaVisitantes.add(visitante3);
@@ -323,6 +321,9 @@ public class main {
         Stand stand3 = new Stand("789", "pabellon C", "Mediano");
             stand1.setEmpresa("cocacola");
             stand2.setEmpresa("Sprite");
+            stand1.setComentario(new Comentario("Jhon", LocalDate.now().toString(), 4, "testing")) ;
+            stand2.setComentario(new Comentario("Jean", LocalDate.now().toString(), 2, "testssss")) ;
+
         listaStands.add(stand3);
         listaStands.add(stand2);
         listaStands.add(stand1);
@@ -343,7 +344,7 @@ public class main {
                 for (Visitante visitante : listaVisitantes) {
                     if (visitante.getNombre().equals(nombreVisitante)) {
                         existe = true;        
-                        visitante.setStands(listaStands.get(i).getId());
+                        visitante.setStands(listaStands.get(i).getEmpresa());
                     }
                 }
                 if (!existe) {
@@ -379,6 +380,28 @@ public class main {
             }
             
         }
+    }
+    public static void asignarStand(Scanner scnr){
+        standDisponibles();
+        empresasDisponibles();
+        System.out.println("");
+        System.out.println("Elija un stand ");
+        String stand = scnr.nextLine();
+        System.out.println("Elije un empresa");
+        String empresa = scnr.nextLine();
+        for (int i = 0; i < listaStands.size(); i++) {
+            if (listaStands.get(i).getId().equals(stand)) {
+                listaStands.get(i).setEmpresa(empresa);
+                break;
+            }
+        }
+        for (int i = 0; i < listaEmpresas.size(); i++) {
+            if (listaEmpresas.get(i).getNombre().equals(empresa)) {
+                listaEmpresas.get(i).setStand(stand);
+                break;
+            }
+        }
+        System.out.println("Stand asignado");
     }
 
 }

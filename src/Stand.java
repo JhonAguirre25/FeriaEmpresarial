@@ -12,6 +12,7 @@ public class Stand {
         this.id = id;
         this.ubicacion = ubicacion;
         this.tamaño = tamaño;
+        this.empresa = "sin asignar";
     } 
 
     public void setId (String id) {
