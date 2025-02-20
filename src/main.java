@@ -35,15 +35,14 @@ public class main {
                 if (option.equals("1")) {
                     mostrarStands();
                 } else if (option.equals("2")) {
-                  asignarStand(scnr);
+                    asignarStand(scnr);
                 } else if (option.equals("3")) {
                     visitarStands(scnr);
                 } else if (option.equals("4")) {
                     verComentario(scnr);
-                }  else if (option.equals("5")) {
+                } else if (option.equals("5")) {
                     continue;
                 }
-
 
             } else if (option.equals("3")) {
                 menuEmpresas();
@@ -117,7 +116,7 @@ public class main {
         System.out.println("3. Visitar Stand");
         System.out.println("4. Ver comentarios");
         System.out.println("5. Regresar al menu principal");
-        
+
     }
 
     public static void registroEmpresa(Scanner scnr) {
@@ -172,19 +171,19 @@ public class main {
             visitante.getStands();
             System.out.println("-");
         }
-        
+
     }
 
     public static void mostrarCalificaciones() {
         for (Stand stand : listaStands) {
-           if (!stand.getComentarios().isEmpty()) {
-            System.out.println("stand: " + stand.getId() + " Ubicacion: " + stand.getUbicacion()
-            + " Promedio de calificacion: " + stand.getPromedio());
-        
-           } else {
-            System.out.println("stand: " + stand.getId() + " Ubicacion: " + stand.getUbicacion()
-            + " Sin calificaciones");
-           }
+            if (!stand.getComentarios().isEmpty()) {
+                System.out.println("stand: " + stand.getId() + " Ubicacion: " + stand.getUbicacion()
+                        + " Promedio de calificacion: " + stand.getPromedio());
+
+            } else {
+                System.out.println("stand: " + stand.getId() + " Ubicacion: " + stand.getUbicacion()
+                        + " Sin calificaciones");
+            }
         }
     }
 
@@ -214,7 +213,8 @@ public class main {
         System.out.println("<Ocupados>");
         for (Stand stand : listaStands) {
             if (!stand.getEmpresa().equals("sin asignar")) {
-                System.out.println("stand: " + stand.getId() + " " + stand.getUbicacion() + " " + stand.getTamaño() + " " + stand.getEmpresa());
+                System.out.println("stand: " + stand.getId() + " " + stand.getUbicacion() + " " + stand.getTamaño()
+                        + " " + stand.getEmpresa());
             }
         }
         System.out.println("<Ocupados>");
@@ -299,7 +299,6 @@ public class main {
         empresa1.setStand("123");
         empresa2.setStand("456");
 
-
         listaEmpresas.add(empresa3);
         listaEmpresas.add(empresa2);
         listaEmpresas.add(empresa1);
@@ -315,20 +314,17 @@ public class main {
         listaVisitantes.add(visitante2);
         listaVisitantes.add(visitante3);
 
-
         Stand stand1 = new Stand("123", "pabellon A", "Grande");
         Stand stand2 = new Stand("456", "pabellon B", "Pequeño");
         Stand stand3 = new Stand("789", "pabellon C", "Mediano");
-            stand1.setEmpresa("cocacola");
-            stand2.setEmpresa("Sprite");
-            stand1.setComentario(new Comentario("Jhon", LocalDate.now().toString(), 4, "testing")) ;
-            stand2.setComentario(new Comentario("Jean", LocalDate.now().toString(), 2, "testssss")) ;
+        stand1.setEmpresa("cocacola");
+        stand2.setEmpresa("Sprite");
+        stand1.setComentario(new Comentario("Jhon", LocalDate.now().toString(), 4, "testing"));
+        stand2.setComentario(new Comentario("Jean", LocalDate.now().toString(), 2, "testssss"));
 
         listaStands.add(stand3);
         listaStands.add(stand2);
         listaStands.add(stand1);
-
-        
 
     }
 
@@ -340,10 +336,10 @@ public class main {
                 System.out.println("ingrese su nombre");
                 String nombreVisitante = scnr.nextLine();
                 boolean existe = false;
-                
+
                 for (Visitante visitante : listaVisitantes) {
                     if (visitante.getNombre().equals(nombreVisitante)) {
-                        existe = true;        
+                        existe = true;
                         visitante.setStands(listaStands.get(i).getEmpresa());
                     }
                 }
@@ -351,37 +347,37 @@ public class main {
                     System.out.println(nombreVisitante + " no esta en la lista de visitantes.");
                     break;
                 }
-                
+
                 System.out.println("Ingrese el comentario que desea dejar");
                 String comentario = scnr.nextLine();
                 System.out.println("Califique su experiencia de 1 a 5");
                 int calificacion = scnr.nextInt();
                 String fecha = LocalDate.now().toString();
                 Comentario comentarioNuevo = new Comentario(nombreVisitante, fecha, calificacion, comentario);
-                 listaStands.get(i).setComentario(comentarioNuevo);
-                 System.out.println("comentario añadido con exito");
-
+                listaStands.get(i).setComentario(comentarioNuevo);
+                System.out.println("comentario añadido con exito");
 
             }
         }
     }
 
-    public static void verComentario (Scanner scnr) {
+    public static void verComentario(Scanner scnr) {
         System.out.println("Que Empresa desearia ver?");
-        String respuesta = scnr.nextLine(); 
+        String respuesta = scnr.nextLine();
         for (Stand stand : listaStands) {
             if (respuesta.equals(stand.getEmpresa())) {
                 ArrayList<Comentario> lista = stand.getComentarios();
                 System.out.println("-------");
                 for (Comentario comentario : lista) {
                     comentario.imprimirComentario();
-                } 
+                }
                 break;
             }
-            
+
         }
     }
-    public static void asignarStand(Scanner scnr){
+
+    public static void asignarStand(Scanner scnr) {
         standDisponibles();
         empresasDisponibles();
         System.out.println("");
